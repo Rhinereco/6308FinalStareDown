@@ -79,7 +79,7 @@ class Game
             bool drewCard;
             if (currentPlayer is AIPlayer ai)
             {
-                // AI 出牌，并存储 AI 出的牌
+                // AI player play the card, and keep the played one
                 lastAIMove = ai.PlayTurn(playPile, deck, freePlay) ? new List<Card>() : new List<Card>(playPile.GetRange(playPile.Count - 1, 1));
                 drewCard = false;
             }
