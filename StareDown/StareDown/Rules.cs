@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+
+/*
+    This class defines the rules for playing valid moves in the game. It ensures that 
+    players and AI can only play legal cards based on the game rules. Checks validity 
+    for single cards, pairs, and bombs (four-of-a-kind).
+*/
 class Rules
 {
     public static bool IsValidMove(Card playedCard, List<Card> playPile)
