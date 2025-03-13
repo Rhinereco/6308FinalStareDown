@@ -2,10 +2,19 @@ using System;
 
 class Card
 {
-    public string Suit { get; private set; }
-    public string Rank { get; private set; }
-    public int BaseValue { get; private set; }
+    public string Suit { get; private set; }  // Card suit (♠, ♥, ♦, ♣)
+    public string Rank { get; private set; }  // Card rank (3-10, J, Q, K, A)
+    public int BaseValue { get; private set; }  // Card base value (before suit effects)
 
+    // ✅ Updated constructor to accept three arguments
+    public Card(string suit, string rank, int baseValue)
+    {
+        Suit = suit;
+        Rank = rank;
+        BaseValue = baseValue;
+    }
+
+    // ✅ Alternate constructor to maintain backward compatibility (without baseValue)
     public Card(string suit, string rank)
     {
         Suit = suit;
@@ -13,6 +22,7 @@ class Card
         BaseValue = DetermineBaseValue(rank);
     }
 
+    // Determines base point value based on rank
     private int DetermineBaseValue(string rank)
     {
         return rank switch
@@ -27,11 +37,18 @@ class Card
         };
     }
 
-    // ✅ Fix: Implement GetPointValue() to apply suit effects
     public int GetPointValue()
     {
         int finalValue = BaseValue;
 
+        /*
+            ============================
+            if 2♠，value = 20 × 2 = 40
+            if 2♥，value = 20 + 2 = 22
+            if 2♦，value = 20 - 1 = 19
+            if 2♣，value = 20（no change）
+            ============================
+        */
         // Apply suit effects
         switch (Suit)
         {
@@ -48,7 +65,7 @@ class Card
                 break;
         }
 
-        return finalValue > 0 ? finalValue : 0; // Ensure points never go below 0
+        return Math.Max(finalValue, 0); // Ensure points never go below 0
     }
 
     public override string ToString()
