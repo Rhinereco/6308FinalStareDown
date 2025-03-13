@@ -30,6 +30,8 @@ class Game
     private Player aiPlayer; // The AI opponent (stored as Player type for polymorphism)
     private List<Card> playPile;// Stores the current pile of played cards
     private bool freePlay = false; // If last player drew a card, next player can play anything
+    private List<Card> lastAIMove = new List<Card>(); // take Ai player's last played card
+
 
     // Initializes the game
     public void Start()
@@ -54,20 +56,36 @@ class Game
     private void PlayGame()
     {
         Player currentPlayer = player;
-        Player opponent = aiPlayer; // Store both as Player for easy swapping
+        Player opponent = aiPlayer; // Store both players for easy swapping
 
-        while (deck.HasCards() || !currentPlayer.HasEmptyHand())
+        while (deck.HasCards() || !currentPlayer.HasEmptyHand()) // Keep playing while deck has cards or players have moves
         {
             ShowGameStatus();
+
+            if (currentPlayer == player)
+            {
+                /*
+                    In the current version, after the player plays a card, the AI immediately plays its move. However, because 
+                    this happens too quickly, the player does not know what the AI played. To prevent the player from seeing 
+                    the AI’s hand, no delay will be added to the AI’s actions. Instead, when the player plays a card, a message 
+                    will be displayed informing them of the AI’s last move.
+                */ 
+                if (lastAIMove.Count > 0)
+                {
+                    Console.WriteLine($"🔹 AI previously played: {string.Join(", ", lastAIMove)}");
+                }
+            }
 
             bool drewCard;
             if (currentPlayer is AIPlayer ai)
             {
-                drewCard = ai.PlayTurn(playPile, deck, freePlay); // AI makes a move
+                // AI 出牌，并存储 AI 出的牌
+                lastAIMove = ai.PlayTurn(playPile, deck, freePlay) ? new List<Card>() : new List<Card>(playPile.GetRange(playPile.Count - 1, 1));
+                drewCard = false;
             }
             else
             {
-                drewCard = currentPlayer.PlayTurn(playPile, deck, freePlay); // Human makes a move
+                drewCard = currentPlayer.PlayTurn(playPile, deck, freePlay); // Human player's turn
             }
 
             if (currentPlayer.HasEmptyHand())
@@ -78,13 +96,14 @@ class Game
 
             freePlay = drewCard; // If a player draws, the next player can play anything
 
-            // Swap turns correctly
+            // Swap turns correctly (Player <-> AI)
             (currentPlayer, opponent) = (opponent, currentPlayer);
         }
 
         Console.WriteLine("\nGame over! The deck is empty. Calculating final scores...");
-        DetermineWinner();
+        DetermineWinner(); // Determine the winner based on score
     }
+
 
     private void ShowGameStatus()
     {

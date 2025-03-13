@@ -19,3 +19,11 @@
 /Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/StareDown.dll
 /Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/refint/StareDown.dll
 /Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/StareDown.pdb
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/bin/Debug/net9.0/StareDown
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/bin/Debug/net9.0/StareDown.deps.json
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/bin/Debug/net9.0/StareDown.runtimeconfig.json
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/bin/Debug/net9.0/StareDown.dll
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/bin/Debug/net9.0/StareDown.pdb
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/StareDown.sourcelink.json
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/StareDown.genruntimeconfig.cache
+/Users/rhine/Documents/GitHub/6308FinalStareDown/StareDown/StareDown/obj/Debug/net9.0/ref/StareDown.dll
