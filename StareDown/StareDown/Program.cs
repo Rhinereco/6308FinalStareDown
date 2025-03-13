@@ -56,3 +56,30 @@ class Program
             - `A`: Opponent must draw a card
           - `Joker` can replace any card or remove the opponent’s highest-value card.
     */
+
+    /*
+        The second human player was replaced with an AI opponent, changing the game from player 
+        vs. player to player vs. AI. In Game.cs, Player player2 was replaced with AIPlayer aiPlayer, 
+        ensuring AI inherits from Player to reuse existing gameplay logic.
+
+        A new AIPlayer.cs file was created to handle AI decision-making. The PlayTurn() method was 
+        implemented to make AI choose the best possible move, prioritizing bombs first, then pairs, 
+        then single cards. If AI has no valid move, it automatically draws a card.
+
+        Game.cs was modified to support AI turns by checking whether currentPlayer is an instance of 
+        AIPlayer and calling aiPlayer.PlayTurn(). This allowed AI to follow the same gameplay flow 
+        as a human player.
+
+        Player.cs was adjusted to allow AI to use existing mechanics by changing PlayCards() and 
+        ApplyCardEffects() from private to protected. AI logic was also updated to correctly apply 
+        special effects for J, Q, K, A, and Joker cards.
+
+        Hand.cs was updated to support AI decision-making by adding HasPair() and HasBomb() methods, 
+        enabling AI to check if it can play a pair or a bomb. The GetValidMoves() method was 
+        improved to let AI filter playable cards and choose the optimal move.
+
+        Deck.cs remained largely unchanged, but its Shuffle() function continues to randomize the 
+        deck, and DrawCard() ensures AI can also draw cards when necessary.
+
+        Rules.cs was kept unchanged to maintain the same gameplay logic as the original PVP version.
+    */
