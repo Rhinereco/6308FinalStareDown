@@ -53,6 +53,8 @@ class Game
     }
 
     // Controls the main game loop
+
+    
     private void PlayGame()
     {
         Player currentPlayer = player;
@@ -72,7 +74,7 @@ class Game
                 */ 
                 if (lastAIMove.Count > 0)
                 {
-                    Console.WriteLine($"🔹 AI previously played: {string.Join(", ", lastAIMove)}");
+                    Console.WriteLine($"AI previously played: {string.Join(", ", lastAIMove)}");
                 }
             }
 
@@ -80,21 +82,39 @@ class Game
             if (currentPlayer is AIPlayer ai)
             {
                 // AI player play the card, and keep the played one
-                lastAIMove = ai.PlayTurn(playPile, deck, freePlay) ? new List<Card>() : new List<Card>(playPile.GetRange(playPile.Count - 1, 1));
-                drewCard = false;
+                // if AI cannot play, then draw a new card from the pile
+                drewCard = ai.PlayTurn(playPile, deck, freePlay);
+                lastAIMove = drewCard ? new List<Card>() : new List<Card>(playPile.GetRange(playPile.Count - 1, 1));
             }
             else
             {
-                drewCard = currentPlayer.PlayTurn(playPile, deck, freePlay); // Human player's turn
+                // Human player's turn, check if human player can play
+                drewCard = currentPlayer.PlayTurn(playPile, deck, freePlay); 
             }
 
+            // ver.2025.3.18 modify
+            // When someone was forced to draw a new card, since he cannot play, the other player can play any hand they have
+            // The other player have no need to follow the last played card
+            if (drewCard)
+            {
+                freePlay = true; // Let the other player play any card they want
+            }
+            else
+            {
+                freePlay = false; // if the last played card was followed successively, then keep the order
+            }
+
+            // check if someone win
             if (currentPlayer.HasEmptyHand())
             {
                 Console.WriteLine($"\n {currentPlayer.Name} played all their cards and wins immediately! ");
                 return;
             }
 
+            /*
+             I do not use this now
             freePlay = drewCard; // If a player draws, the next player can play anything
+            */
 
             // Swap turns correctly (Player <-> AI)
             (currentPlayer, opponent) = (opponent, currentPlayer);
